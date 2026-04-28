@@ -1,0 +1,26 @@
+services:
+  localstack:
+    container_name: localstack_main
+    image: localstack/localstack:latest  # The new unified image
+    ports:
+      - "4566:4566"            # Edge port for all AWS services
+    environment:
+      - SERVICES=lambda,dynamodb,apigateway
+     
+      - LOCALSTACK_AUTH_TOKEN=${LOCALSTACK_AUTH_TOKEN} # Use a variable for safety
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - POSTGRES_CONNECTION_STRING=Host=host.docker.internal;Port=5432;Database=tasksdb;Username=postgres;Password=password
+      - LAMBDA_RUNTIME_ENVIRONMENT_TIMEOUT=120  # Give it 2 minutes
+      - DEBUG=1                                 # See the actual .NET crash logs
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+
+  postgres:
+    container_name: postgres_db
+    image: postgres:17
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=taskdb
+    ports:
+      - "5432:5432"

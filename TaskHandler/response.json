@@ -1,0 +1,1 @@
+{"statusCode":200,"headers":{"Content-Type":"application/json"},"body":"[{\"id\":1,\"title\":\"Victory Lap\",\"description\":\"The Lambda is finally talking to the DB!\",\"isCompleted\":false}]","isBase64Encoded":false}
